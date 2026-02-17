@@ -1,0 +1,30 @@
+# Update system
+sudo apt update
+
+# Install Java (required)
+sudo apt install -y fontconfig openjdk-21-jre
+java -version
+
+# Prepare keyring folder
+sudo mkdir -p /etc/apt/keyrings
+
+# Add Jenkins repo key
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+# Add Jenkins repo
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+
+# Install Jenkins
+sudo apt update
+sudo apt install -y jenkins
+
+# Start Jenkins
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+# Get Jenkins password
+ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
